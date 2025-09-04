@@ -39,18 +39,16 @@ nav ul li a {
 
 /* Mobile Menu Styles */
 #menu {
-    transition: max-height 0.3s ease-out, background-color 0.3s ease-out, backdrop-filter 0.3s ease-out;
-    overflow: hidden;
-    max-height: 0;
+    transition: transform 0.3s ease-out;
+    transform: translateX(100%);
     background-color: rgba(30, 58, 138, 0.8); /* Semi-transparent background */
     backdrop-filter: blur(10px); /* Glassmorphism effect */
     border-radius: 0 0 0 1rem;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-
 #menu-toggle:checked + label + #menu {
-    max-height: 500px;
+    transform: translateX(0);
 }
 
 #menu li {
@@ -67,6 +65,7 @@ nav ul li a {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  transition: box-shadow 0.3s ease;
 }
 
 .contact-button::before {
@@ -87,7 +86,6 @@ nav ul li a {
 
 .contact-button:hover {
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-  transform: scale(1.05);
 }
 
 
@@ -95,11 +93,12 @@ nav ul li a {
   #menu {
     display: flex !important;
     flex-direction: row;
-    max-height: none;
+    transform: translateX(0);
     background-color: transparent;
     backdrop-filter: none;
     box-shadow: none;
     border-radius: 0;
+    position: relative;
   }
   #menu li {
     border-bottom: none;
@@ -201,12 +200,7 @@ nav ul li a {
 }
 
 .service-section.hidden {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    opacity: 0;
-    pointer-events: none;
+    display: none;
 }
 
 .neon-bronce {
@@ -255,12 +249,11 @@ nav ul li a {
 }
 
 .portfolio-page.hidden {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    pointer-events: none;
+    display: none;
+}
+
+.portfolio-section.hidden {
+    display: none;
 }
 
 
@@ -307,12 +300,7 @@ nav ul li a {
 }
 
 #blog .blog-page.hidden {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    pointer-events: none;
+    display: none;
 }
 
 /* Contact Section */
