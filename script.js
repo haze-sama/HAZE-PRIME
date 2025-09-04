@@ -160,11 +160,17 @@ function showService(serviceId, event) {
 
 function showPortfolio(portfolioId, event) {
     showSection('portfolio', portfolioId, event);
+    // Reset page to 1 when switching tabs
+    const category = portfolioId.replace('portfolio-', '');
+    const state = pageStates[`portfolio-${category}`];
+    if (state && state.currentPage !== 1) {
+        handlePageChange(`portfolio-${category}`, 1 - state.currentPage);
+    }
 }
 
 // --- Pagination Logic ---
 const pageStates = {
-    blog: { currentPage: 1, totalPages: 4 },
+    blog: { currentPage: 1, totalPages: 6 },
     'portfolio-web': { currentPage: 1, totalPages: 2 },
     'portfolio-uiux': { currentPage: 1, totalPages: 2 },
     'portfolio-graphic': { currentPage: 1, totalPages: 2 }
@@ -234,7 +240,7 @@ const blogData = [
 
 function setupBlog() {
     const container = document.querySelector('#blog .blog-container');
-    const cardsPerPage = 6;
+    const cardsPerPage = 4; // Updated to 4 cards per page
     const numPages = Math.ceil(blogData.length / cardsPerPage);
     pageStates.blog.totalPages = numPages;
 
