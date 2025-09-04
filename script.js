@@ -175,9 +175,10 @@ function showService(serviceId, event) {
 
 function showPortfolio(portfolioId, event) {
     showSection('portfolio', portfolioId, event);
-    const category = portfolioId.replace('portfolio-', '');
+    // Reset page to 1 when switching tabs
     const state = pageStates[portfolioId];
     if (state && state.currentPage !== 1) {
+        // This calculates the direction to get back to page 1
         handlePageChange(portfolioId, 1 - state.currentPage, false);
     }
 }
@@ -322,22 +323,23 @@ function setupPopups() {
         { id: 'content-bronce', title: 'Artículos SEO (Bronce)', content: 'Artículos optimizados de 500-700 palabras con 1-2 imágenes. Ideal para blogs nuevos o redes sociales.<br><br><strong>Entrega:</strong> Documento Word, imágenes editadas, publicación opcional.<br><strong>Precio:</strong> $10 - $15.', img: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80'},
         { id: 'content-plata', title: 'Contenido Multimedia (Plata)', content: 'Artículos de 1,000-1,500 palabras con infografías o gráficos personalizados. Perfecto para redes y blogs establecidos.<br><br><strong>Entrega:</strong> Documento Word, gráficos PNG/SVG, publicación opcional.<br><strong>Precio:</strong> $30 - $55.', img: 'https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=600&q=80'},
         { id: 'content-oro', title: 'Contenido Premium (Oro)', content: 'E-books de 10-20 páginas o videos editados (3-5 min) con SEO avanzado. Ideal para campañas de alto impacto.<br><br><strong>Entrega:</strong> PDF o MP4, archivos fuente, publicación opcional.<br><strong>Precio:</strong> $150 - $250.', img: 'https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?auto=format&fit=crop&w=600&q=80'},
-        { id: 'graphic-bronce', title: 'Gráficos para Redes (Bronce)', content: '5-7 gráficos optimizados para redes sociales (Instagram, Twitter). Ideal para campañas rápidas.<br><br><strong>Entrega:</strong> Archivos PNG/JPG, editable en Canva.<br><strong>Precio:</strong> $10 - $20.', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=80'},
-        { id: 'graphic-plata', title: 'Branding Básico (Plata)', content: 'Logotipo, paleta de colores y plantillas para redes o presentaciones. Perfecto para startups en crecimiento.<br><br><strong>Entrega:</strong> Archivos AI/PNG, guía de marca PDF.<br><strong>Precio:</strong> $50 - $90.', img: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=600&q=80'},
+        { id: 'graphic-bronce', title: 'Gráficos para Redes (Bronce)', content: '5-7 gráficos optimizados para redes sociales (Instagram, Twitter). Ideal para campañas rápidas.<br><br><strong>Entrega:</strong> Archivos PNG/JPG, editable en Canva.<br><strong>Precio:</strong> $10 - $20.', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=60'},
+        { id: 'graphic-plata', title: 'Branding Básico (Plata)', content: 'Logotipo, paleta de colores y plantillas para redes o presentaciones. Perfecto para startups en crecimiento.<br><br><strong>Entrega:</strong> Archivos AI/PNG, guía de marca PDF.<br><strong>Precio:</strong> $50 - $90.', img: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=600&q=60'},
         { id: 'graphic-oro', title: 'Ilustraciones y Animaciones (Oro)', content: 'Ilustraciones personalizadas o animaciones (30-60s) para campañas premium. Ideal para marcas establecidas.<br><br><strong>Entrega:</strong> Archivos AI/MP4, editable en After Effects, guía de uso.<br><strong>Precio:</strong> $330 - $759.', img: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?auto=format&fit=crop&w=600&q=80'},
         { id: 'video-bronce', title: 'Clips Sociales (Bronce)', content: 'Edición de 3-5 videos cortos (hasta 60s) para redes sociales.<br><br><strong>Entrega:</strong> Archivos MP4 optimizados para cada red.<br><strong>Precio:</strong> $12 - $25.', img: 'https://images.unsplash.com/photo-1574627051240-573577d48377?auto=format&fit=crop&w=600&q=60'},
         { id: 'video-plata', title: 'Video Promocional (Plata)', content: 'Video promocional de 1-2 minutos con música y gráficos básicos.<br><br><strong>Entrega:</strong> Archivo MP4 en alta resolución.<br><strong>Precio:</strong> $60 - $120.', img: 'https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?auto=format&fit=crop&w=600&q=60'},
-        { id: 'video-oro', title: 'Producción Completa (Oro)', content: 'Video de marketing (2-5 min) con efectos avanzados y corrección de color.<br><br><strong>Entrega:</strong> Archivo MP4 en 4K, archivos del proyecto.<br><strong>Precio:</strong> $220 - $450.', img: 'https://images.unsplash.com/photo-1578351184300-3d84a7178822?auto=format&fit=crop&w=600&q=80'},
+        { id: 'video-oro', title: 'Producción Completa (Oro)', content: 'Video de marketing (2-5 min) con efectos avanzados y corrección de color.<br><br><strong>Entrega:</strong> Archivo MP4 en 4K, archivos del proyecto.<br><strong>Precio:</strong> $220 - $450.', img: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?auto=format&fit=crop&w=600&q=60'},
+        
         // Portfolio Popups
-        { id: 'portfolio-web-1', title: 'Sitio Corporativo', content: 'Sitio WordPress para una empresa de consultoría, con SEO avanzado y diseño responsivo.<br><br><strong>Tecnologías:</strong> WordPress, Elementor, Yoast SEO.' },
-        { id: 'portfolio-web-2', title: 'E-Commerce', content: 'Tienda Shopify personalizada con integración de pagos y optimización SEO.<br><br><strong>Tecnologías:</strong> Shopify, Oberlo, Google Analytics.' },
-        { id: 'portfolio-web-3', title: 'App React', content: 'Aplicación full-stack con React, Node.js y MongoDB para gestión de proyectos.<br><br><strong>Tecnologías:</strong> React, Node.js, MongoDB, JWT.' },
-        { id: 'portfolio-uiux-1', title: 'Prototipo App', content: 'Prototipo clickable en Figma para una app de fitness con transiciones suaves.<br><br><strong>Herramientas:</strong> Figma, Adobe XD.' },
-        { id: 'portfolio-uiux-2', title: 'Sistema de Diseño', content: 'Guía UI/UX completa con componentes reutilizables para una startup tech.<br><br><strong>Herramientas:</strong> Figma, Sketch.' },
-        { id: 'portfolio-uiux-3', title: 'Wireframes', content: 'Wireframes para un e-commerce con enfoque en usabilidad móvil.<br><br><strong>Herramientas:</strong> Figma, Balsamiq.' },
-        { id: 'portfolio-graphic-1', title: 'Branding Restaurante', content: 'Logotipo y gráficos para un restaurante moderno con estética minimalista.<br><br><strong>Herramientas:</strong> Illustrator, Photoshop.' },
-        { id: 'portfolio-graphic-2', title: 'Animación', content: 'Video animado de 30 segundos para una campaña publicitaria.<br><br><strong>Herramientas:</strong> After Effects, Premiere Pro.' },
-        { id: 'portfolio-graphic-3', title: 'Gráficos Sociales', content: 'Posters optimizados para Instagram y Twitter para una marca de moda.<br><br><strong>Herramientas:</strong> Canva, Photoshop.' },
+        { id: 'portfolio-web-1', title: 'Sitio Corporativo', content: 'Sitio WordPress para una empresa de consultoría, con SEO avanzado y diseño responsivo.<br><br><strong>Tecnologías:</strong> WordPress, Elementor, Yoast SEO.', img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80' },
+        { id: 'portfolio-web-2', title: 'E-Commerce', content: 'Tienda Shopify personalizada con integración de pagos y optimización SEO.<br><br><strong>Tecnologías:</strong> Shopify, Oberlo, Google Analytics.', img: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&q=80' },
+        { id: 'portfolio-web-3', title: 'App React', content: 'Aplicación full-stack con React, Node.js y MongoDB para gestión de proyectos.<br><br><strong>Tecnologías:</strong> React, Node.js, MongoDB, JWT.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80' },
+        { id: 'portfolio-uiux-1', title: 'Prototipo App', content: 'Prototipo clickable en Figma para una app de fitness con transiciones suaves.<br><br><strong>Herramientas:</strong> Figma, Adobe XD.', img: 'https://images.unsplash.com/photo-1587440871875-191322ee64b0?auto=format&fit=crop&w=600&q=80' },
+        { id: 'portfolio-uiux-2', title: 'Sistema de Diseño', content: 'Guía UI/UX completa con componentes reutilizables para una startup tech.<br><br><strong>Herramientas:</strong> Figma, Sketch.', img: 'https://images.unsplash.com/photo-1522125670776-3c7abb882bc2?auto=format&fit=crop&w=600&q=80' },
+        { id: 'portfolio-uiux-3', title: 'Wireframes', content: 'Wireframes para un e-commerce con enfoque en usabilidad móvil.<br><br><strong>Herramientas:</strong> Figma, Balsamiq.', img: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=600&q=80' },
+        { id: 'portfolio-graphic-1', title: 'Branding Restaurante', content: 'Logotipo y gráficos para un restaurante moderno con estética minimalista.<br><br><strong>Herramientas:</strong> Illustrator, Photoshop.', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80' },
+        { id: 'portfolio-graphic-2', title: 'Animación', content: 'Video animado de 30 segundos para una campaña publicitaria.<br><br><strong>Herramientas:</strong> After Effects, Premiere Pro.', img: 'https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?auto=format&fit=crop&w=600&q=80' },
+        { id: 'portfolio-graphic-3', title: 'Gráficos Sociales', content: 'Posters optimizados para Instagram y Twitter para una marca de moda.<br><br><strong>Herramientas:</strong> Canva, Photoshop.', img: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?auto=format&fit=crop&w=600&q=80' },
     ];
 
     let popupHTML = '';
@@ -395,4 +397,3 @@ function openPopup(popupId) {
       }
   });
 }
-
