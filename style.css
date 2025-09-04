@@ -1,429 +1,391 @@
-<!DOCTYPE html>
-<html lang="es" style="scroll-behavior: smooth;">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HAZE-SAMA | Freelancer de Desarrollo Web, Diseño y SEO</title>
-  
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Contrata a HAZE-SAMA, freelancer experto en Bogotá para servicios de desarrollo web con React, diseño UI/UX en Figma, SEO, y edición de video. Soluciones digitales asequibles y profesionales.">
-  <meta name="keywords" content="freelancer desarrollo web bogota, diseñador ui/ux freelance, experto seo colombia, edición de video freelance, desarrollo react, diseño figma, servicios de marketing digital, portafolio de diseño web">
-  <meta name="author" content="HAZE-SAMA">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://haze-sama.com">
+/* General Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: #0f172a;
+  color: #1e293b;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+}
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://haze-sama.com">
-  <meta property="og:title" content="HAZE-SAMA | Freelancer de Desarrollo Web, Diseño y SEO">
-  <meta property="og:description" content="Transforma tu visión con soluciones digitales de vanguardia: desarrollo web, UI/UX, SEO y más. Portafolio profesional y precios competitivos.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80">
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://haze-sama.com">
-  <meta property="twitter:title" content="HAZE-SAMA | Freelancer de Desarrollo Web, Diseño y SEO">
-  <meta property="twitter:description" content="Transforma tu visión con soluciones digitales de vanguardia: desarrollo web, UI/UX, SEO y más. Portafolio profesional y precios competitivos.">
-  <meta property="twitter:image" content="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80">
-  
-  <!-- External Libraries -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+/* Header Styles */
+header {
+  background: linear-gradient(135deg, #1e3a8a, #7e22ce);
+}
 
-  <!-- Local Stylesheet -->
-  <link rel="stylesheet" href="style.css">
-  
-  <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "HAZE-SAMA",
-    "url": "https://haze-sama.com",
-    "jobTitle": "Freelancer Digital",
-    "knowsAbout": ["Desarrollo Web", "Diseño UI/UX", "SEO", "Edición de Video", "Diseño Gráfico"],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Bogotá",
-      "addressCountry": "CO"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Servicios Digitales",
-      "itemListElement": [
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Desarrollo Web - Paquete Bronce" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Desarrollo Web - Paquete Plata" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Desarrollo Web - Paquete Oro" } }
-      ]
-    }
+#header-particles {
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Mobile Menu Styles */
+#menu {
+    transition: max-height 0.3s ease-out, background-color 0.3s ease-out, backdrop-filter 0.3s ease-out;
+    overflow: hidden;
+    max-height: 0;
+    background-color: rgba(30, 58, 138, 0.8); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    border-radius: 0 0 0 1rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+#menu-toggle:checked + label + #menu {
+    max-height: 500px;
+}
+
+#menu li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#menu li:last-child {
+    border-bottom: none;
+}
+
+
+@media (min-width: 768px) {
+  #menu {
+    display: flex !important;
+    flex-direction: row;
+    max-height: none;
+    background-color: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    border-radius: 0;
   }
-  </script>
-</head>
-<body class="bg-slate-900">
-  <header class="text-white sticky top-0 z-50 shadow-lg">
-    <canvas id="header-particles" class="absolute inset-0 z-0"></canvas>
-    <nav class="container mx-auto p-4 flex justify-between items-center relative z-10">
-      <a href="#home" class="flex items-center space-x-2 cursor-pointer" aria-label="Volver al inicio">
-        <!-- Foto #1 -->
-        <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=48&h=48&q=80" alt="Logo de HAZE-SAMA - Ojo Abstracto" class="w-10 h-10 rounded-full">
-        <h1 class="text-2xl font-extrabold">HAZE-SAMA</h1>
-      </a>
-      <input type="checkbox" id="menu-toggle" class="hidden">
-      <label for="menu-toggle" class="md:hidden cursor-pointer p-2 rounded-md hover:bg-white/10">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-      </label>
-      <ul id="menu" class="absolute md:relative top-full right-0 w-full md:w-auto flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 items-center text-base p-4 md:p-0">
-        <li><a href="#home" class="hover:text-purple-400 transition block py-2">Inicio</a></li>
-        <li><a href="#skills" class="hover:text-purple-400 transition block py-2">Habilidades</a></li>
-        <li><a href="#services" class="hover:text-purple-400 transition block py-2">Servicios</a></li>
-        <li><a href="#portfolio" class="hover:text-purple-400 transition block py-2">Portafolio</a></li>
-        <li><a href="#blog" class="hover:text-purple-400 transition block py-2">Blog</a></li>
-        <li><a href="#contact" class="hover:text-purple-400 transition block py-2">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
+  #menu li {
+    border-bottom: none;
+  }
+  #menu-toggle, #menu-toggle + label {
+    display: none;
+  }
+}
 
-  <main>
-    <section id="home" class="text-white py-32 relative">
-      <canvas id="particles" class="absolute inset-0 z-0"></canvas>
-      <div class="container mx-auto text-center px-4 z-10 relative">
-        <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">Soluciones Digitales que Impulsan tu Negocio</h1>
-        <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">Como freelancer experto, ofrezco desarrollo web, diseño UI/UX y SEO para transformar tu presencia online y alcanzar tus objetivos.</p>
-        <a href="#contact" class="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-indigo-500 hover:to-purple-500 transition neon-blue mx-auto">Inicia tu Proyecto Hoy</a>
-      </div>
-    </section>
+/* Home Section */
+#home {
+  background: linear-gradient(135deg, #1e3a8a, #7e22ce);
+  position: relative;
+  overflow: hidden;
+}
 
-    <section id="skills" class="py-20 bg-slate-100">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-16 text-gray-900">Mis Habilidades y Servicios Digitales</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <!-- Skill Cards -->
-          <div class="card p-6">
-              <div class="card-content">
-                  <!-- Foto #2 -->
-                  <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Un desarrollador escribiendo código en una laptop." class="w-full h-40 object-cover rounded-lg mb-4">
-                  <div class="flex-grow">
-                      <h3 class="text-xl font-semibold mb-2 text-indigo-600">Desarrollo Web</h3>
-                      <p class="text-gray-600">Sitios web a medida con React, Vue.js y Node.js.</p>
-                  </div>
-                  <div class="mt-auto pt-4">
-                      <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('skill-web')" aria-label="Ver Más sobre Desarrollo Web">Ver Más</button>
-                  </div>
-              </div>
-          </div>
-          <div class="card p-6">
-             <div class="card-content">
-                  <!-- Foto #3 -->
-                  <img src="https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Una persona actualizando una tienda online en una tablet." class="w-full h-40 object-cover rounded-lg mb-4">
-                  <div class="flex-grow">
-                    <h3 class="text-xl font-semibold mb-2 text-indigo-600">Gestión de Contenidos</h3>
-                    <p class="text-gray-600">WordPress y Shopify optimizados.</p>
-                  </div>
-                  <div class="mt-auto pt-4">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('skill-cms')" aria-label="Ver Más sobre Gestión de Contenidos">Ver Más</button>
-                  </div>
-              </div>
-          </div>
-          <div class="card p-6">
-             <div class="card-content">
-                 <!-- Foto #4 -->
-                 <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Prototipos de una aplicación móvil en una pantalla de computadora." class="w-full h-40 object-cover rounded-lg mb-4">
-                  <div class="flex-grow">
-                    <h3 class="text-xl font-semibold mb-2 text-indigo-600">Diseño UI/UX</h3>
-                    <p class="text-gray-600">Interfaces intuitivas con Figma.</p>
-                  </div>
-                  <div class="mt-auto pt-4">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('skill-uiux')" aria-label="Ver Más sobre Diseño UI/UX">Ver Más</button>
-                  </div>
-              </div>
-          </div>
-          <div class="card p-6">
-              <div class="card-content">
-                  <!-- Foto #5 -->
-                  <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80" alt="Paleta de colores y herramientas de diseño gráfico sobre un escritorio." class="w-full h-40 object-cover rounded-lg mb-4">
-                  <div class="flex-grow">
-                    <h3 class="text-xl font-semibold mb-2 text-indigo-600">Diseño Gráfico</h3>
-                    <p class="text-gray-600">Logotipos y animaciones en Illustrator.</p>
-                  </div>
-                   <div class="mt-auto pt-4">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('skill-graphic')" aria-label="Ver Más sobre Diseño Gráfico">Ver Más</button>
-                  </div>
-              </div>
-          </div>
-          <div class="card p-6">
-             <div class="card-content">
-                  <!-- Foto #6 -->
-                  <img src="https://images.unsplash.com/photo-1554224155-1696413565d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Gráficos y estadísticas de SEO en la pantalla de una computadora." class="w-full h-40 object-cover rounded-lg mb-4">
-                  <div class="flex-grow">
-                    <h3 class="text-xl font-semibold mb-2 text-indigo-600">Optimización SEO</h3>
-                    <p class="text-gray-600">Estrategias SEO avanzadas.</p>
-                  </div>
-                   <div class="mt-auto pt-4">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('skill-seo')" aria-label="Ver Más sobre Optimización SEO">Ver Más</button>
-                  </div>
-              </div>
-          </div>
-          <div class="card p-6">
-             <div class="card-content">
-                 <!-- Foto #7 -->
-                 <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Una persona escribiendo en una laptop con una taza de café al lado." class="w-full h-40 object-cover rounded-lg mb-4">
-                  <div class="flex-grow">
-                    <h3 class="text-xl font-semibold mb-2 text-indigo-600">Creación de Contenido</h3>
-                    <p class="text-gray-600">Artículos y videos para redes.</p>
-                  </div>
-                  <div class="mt-auto pt-4">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('skill-content')" aria-label="Ver Más sobre Creación de Contenido">Ver Más</button>
-                  </div>
-              </div>
-          </div>
-          <div class="card p-6">
-              <div class="card-content">
-                  <!-- Foto #8 -->
-                  <img src="https://images.unsplash.com/photo-1632292359404-a363758b9a1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Una animación abstracta de partículas de luz en movimiento." class="w-full h-40 object-cover rounded-lg mb-4">
-                  <div class="flex-grow">
-                    <h3 class="text-xl font-semibold mb-2 text-indigo-600">Animaciones Web</h3>
-                    <p class="text-gray-600">Animaciones fluidas con GSAP.</p>
-                  </div>
-                  <div class="mt-auto pt-4">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('skill-animations')" aria-label="Ver Más sobre Animaciones Web">Ver Más</button>
-                  </div>
-              </div>
-          </div>
-          <div class="card p-6">
-             <div class="card-content">
-                  <!-- Foto #9 -->
-                  <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Un equipo de personas colaborando en una estrategia de marketing." class="w-full h-40 object-cover rounded-lg mb-4">
-                  <div class="flex-grow">
-                    <h3 class="text-xl font-semibold mb-2 text-indigo-600">Estrategia Digital</h3>
-                    <p class="text-gray-600">Planes de marketing digital.</p>
-                  </div>
-                   <div class="mt-auto pt-4">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('skill-strategy')" aria-label="Ver Más sobre Estrategia Digital">Ver Más</button>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-    </section>
+#particles {
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+}
 
-    <section id="services" class="py-20 text-white relative">
-      <canvas id="services-particles" class="absolute inset-0 z-0"></canvas>
-      <div class="container mx-auto px-4 relative z-10">
-        <h2 class="text-4xl font-bold text-center mb-12">Nuestros Servicios</h2>
-        <nav class="service-nav flex justify-center flex-wrap gap-2 md:gap-4 mb-12 text-lg" aria-label="Selección de Servicios">
-          <a href="#service-web" class="active py-2 px-4" onclick="showService('service-web', event)">Desarrollo Web</a>
-          <a href="#service-uiux" class="py-2 px-4" onclick="showService('service-uiux', event)">Diseño UI/UX</a>
-          <a href="#service-seo" class="py-2 px-4" onclick="showService('service-seo', event)">SEO</a>
-          <a href="#service-content" class="py-2 px-4" onclick="showService('service-content', event)">Contenido</a>
-          <a href="#service-graphic" class="py-2 px-4" onclick="showService('service-graphic', event)">Diseño Gráfico</a>
-          <a href="#service-video" class="py-2 px-4" onclick="showService('service-video', event)">Edición de Video</a>
-        </nav>
-        
-        <div class="service-section-container">
-            <div id="service-web" class="service-section bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg animate-in">
-              <h3 class="text-3xl font-bold mb-6 text-white text-center">Desarrollo Web</h3>
-              <p class="text-lg text-gray-300 mb-6 text-center">Crea una presencia online impactante con sitios rápidos, responsivos y optimizados.</p>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #10 --><img src="https://images.unsplash.com/photo-1516131206008-dd86119822d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Sitio web básico de una página."><div class="flex-grow"><h4 class="text-xl font-bold mb-2 text-gray-900">Bronce: Sitio Estático</h4><p>Lanza tu presencia con un sitio de 3-5 páginas, diseño responsivo, y SEO inicial.</p><p class="mt-4 font-semibold">Precio: $80 - $150</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#CD7F32] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#b76e2c] transition neon-bronce" onclick="openPopup('web-bronce')" aria-label="Explorar Paquete Bronce">Explorar Bronce</button></div></div></div>
-                <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #11 --><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Panel de control de un sitio web en WordPress."><div class="flex-grow"><h4 class="text-xl font-bold mb-2 text-gray-900">Plata: Sitio Dinámico</h4><p>Impulsa tu marca con un sitio WordPress de 5-10 páginas, y SEO avanzado.</p><p class="mt-4 font-semibold">Precio: $300 - $480</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#C0C0C0] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#a8a8a8] transition neon-plata" onclick="openPopup('web-plata')" aria-label="Explorar Paquete Plata">Explorar Plata</button></div></div></div>
-                <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #12 --><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Dashboard complejo de una aplicación web."><div class="flex-grow"><h4 class="text-xl font-bold mb-2 text-gray-900">Oro: App Full-Stack</h4><p>Domina el mercado con una app React y Node.js, base de datos y soporte 30 días.</p><p class="mt-4 font-semibold">Precio: $900 - $1,500</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#FFD700] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#e6c200] transition neon-oro" onclick="openPopup('web-oro')" aria-label="Explorar Paquete Oro">Explorar Oro</button></div></div></div>
-              </div>
-            </div>
-            <div id="service-uiux" class="service-section bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg hidden">
-                <h3 class="text-3xl font-bold mb-6 text-white text-center">Diseño UI/UX</h3>
-                <p class="text-lg text-gray-300 mb-6 text-center">Interfaces intuitivas que cautivan y mejoran la experiencia del usuario.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #13 --><img src="https://images.unsplash.com/photo-1589122823055-6c9b56f8a45e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Bocetos de wireframes de una aplicación."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Bronce: Wireframes</h4><p>Wireframes para 3-5 pantallas en Figma. Ideal para startups que planean su app.</p><p class="mt-4 font-semibold">Precio: $40 - $80</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#CD7F32] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#b76e2c] transition neon-bronce" onclick="openPopup('uiux-bronce')" aria-label="Explorar Paquete Bronce">Explorar Bronce</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #14 --><img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Prototipo interactivo de una aplicación móvil."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Plata: Prototipo</h4><p>Prototipo clickable de 5-10 pantallas con transiciones. Perfecto para pruebas.</p><p class="mt-4 font-semibold">Precio: $150 - $250</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#C0C0C0] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#a8a8a8] transition neon-plata" onclick="openPopup('uiux-plata')" aria-label="Explorar Paquete Plata">Explorar Plata</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #15 --><img src="https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Un sistema de diseño completo con todos sus componentes."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Oro: Sistema de Diseño</h4><p>Guía completa con componentes y pruebas de usuario. Para proyectos escalables.</p><p class="mt-4 font-semibold">Precio: $400 - $800</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#FFD700] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#e6c200] transition neon-oro" onclick="openPopup('uiux-oro')" aria-label="Explorar Paquete Oro">Explorar Oro</button></div></div></div>
-                </div>
-            </div>
-            <div id="service-seo" class="service-section bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg hidden">
-                <h3 class="text-3xl font-bold mb-6 text-white text-center">Optimización SEO</h3>
-                <p class="text-lg text-gray-300 mb-6 text-center">Eleva tu visibilidad en Google con estrategias SEO avanzadas.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #16 --><img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Gráfico de analítica web."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Bronce: Auditoría</h4><p>Análisis on-page con recomendaciones claras. Ideal para sitios nuevos.</p><p class="mt-4 font-semibold">Precio: $50 - $75</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#CD7F32] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#b76e2c] transition neon-bronce" onclick="openPopup('seo-bronce')" aria-label="Explorar Paquete Bronce">Explorar Bronce</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #17 --><img src="https://images.unsplash.com/photo-1551288049-a94711e582A8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Lista de palabras clave para optimización SEO."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Plata: Optimización</h4><p>Optimización de 5 páginas con 10-20 keywords. Perfecto para negocios en crecimiento.</p><p class="mt-4 font-semibold">Precio: $150 - $250</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#C0C0C0] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#a8a8a8] transition neon-plata" onclick="openPopup('seo-plata')" aria-label="Explorar Paquete Plata">Explorar Plata</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #18 --><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Estrategia de link building para SEO."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Oro: Estrategia</h4><p>Estrategia completa con 20+ backlinks y reportes. Para dominar tu nicho.</p><p class="mt-4 font-semibold">Precio: $480 - $900</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#FFD700] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#e6c200] transition neon-oro" onclick="openPopup('seo-oro')" aria-label="Explorar Paquete Oro">Explorar Oro</button></div></div></div>
-                </div>
-            </div>
-            <div id="service-content" class="service-section bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg hidden">
-                <h3 class="text-3xl font-bold mb-6 text-white text-center">Creación de Contenido</h3>
-                <p class="text-lg text-gray-300 mb-6 text-center">Contenido atractivo que conecta con tu audiencia en redes y blogs.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #19 --><img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Persona escribiendo en una libreta."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Bronce: Artículos</h4><p>Artículos SEO de 500-700 palabras con 1-2 imágenes. Ideal para blogs nuevos.</p><p class="mt-4 font-semibold">Precio: $10 - $15</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#CD7F32] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#b76e2c] transition neon-bronce" onclick="openPopup('content-bronce')" aria-label="Explorar Paquete Bronce">Explorar Bronce</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #20 --><img src="https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Diseño de una infografía."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Plata: Multimedia</h4><p>Artículos de 1,000-1,500 palabras con infografías. Perfecto para redes.</p><p class="mt-4 font-semibold">Precio: $30 - $55</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#C0C0C0] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#a8a8a8] transition neon-plata" onclick="openPopup('content-plata')" aria-label="Explorar Paquete Plata">Explorar Plata</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #21 --><img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Persona leyendo un ebook en un tablet."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Oro: Premium</h4><p>E-books o videos (3-5 min) con SEO avanzado. Para campañas de alto impacto.</p><p class="mt-4 font-semibold">Precio: $150 - $250</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#FFD700] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#e6c200] transition neon-oro" onclick="openPopup('content-oro')" aria-label="Explorar Paquete Oro">Explorar Oro</button></div></div></div>
-                </div>
-            </div>
-            <div id="service-graphic" class="service-section bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg hidden">
-                <h3 class="text-3xl font-bold mb-6 text-white text-center">Diseño Gráfico</h3>
-                <p class="text-lg text-gray-300 mb-6 text-center">Gráficos y animaciones que hacen brillar tu marca.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #22 --><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Gráficos de redes sociales."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Bronce: Gráficos</h4><p>5-7 gráficos para redes sociales. Ideal para campañas rápidas.</p><p class="mt-4 font-semibold">Precio: $10 - $20</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#CD7F32] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#b76e2c] transition neon-bronce" onclick="openPopup('graphic-bronce')" aria-label="Explorar Paquete Bronce">Explorar Bronce</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #23 --><img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Diseño de un logotipo y paleta de colores."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Plata: Branding</h4><p>Logotipo, paleta y plantillas. Perfecto para startups.</p><p class="mt-4 font-semibold">Precio: $50 - $90</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#C0C0C0] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#a8a8a8] transition neon-plata" onclick="openPopup('graphic-plata')" aria-label="Explorar Paquete Plata">Explorar Plata</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #24 --><img src="https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Ilustraciones personalizadas."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Oro: Ilustraciones</h4><p>Ilustraciones o animaciones (30-60s). Para marcas premium.</p><p class="mt-4 font-semibold">Precio: $330-$759</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#FFD700] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#e6c200] transition neon-oro" onclick="openPopup('graphic-oro')" aria-label="Explorar Paquete Oro">Explorar Oro</button></div></div></div>
-                </div>
-            </div>
-             <div id="service-video" class="service-section bg-white/10 backdrop-blur-sm p-8 rounded-2xl shadow-lg hidden">
-                <h3 class="text-3xl font-bold mb-6 text-white text-center">Edición de Video</h3>
-                <p class="text-lg text-gray-300 mb-6 text-center">Videos de alto impacto que capturan la atención de tu audiencia.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #25 --><img src="https://images.unsplash.com/photo-1574627051240-573577d48377?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Edición de videos cortos para redes sociales."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Bronce: Clips Sociales</h4><p>Edición de 3-5 videos cortos (hasta 60s) para redes sociales.</p><p class="mt-4 font-semibold">Precio: $12 - $25</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#CD7F32] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#b76e2c] transition neon-bronce" onclick="openPopup('video-bronce')" aria-label="Explorar Paquete Bronce">Explorar Bronce</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #26 --><img src="https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Edición de un video promocional."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Plata: Video Promocional</h4><p>Video promocional de 1-2 minutos con música y gráficos básicos.</p><p class="mt-4 font-semibold">Precio: $60 - $120</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#C0C0C0] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#a8a8a8] transition neon-plata" onclick="openPopup('video-plata')" aria-label="Explorar Paquete Plata">Explorar Plata</button></div></div></div>
-                  <div class="card p-6 text-gray-800"><div class="card-content"><!-- Foto #27 --><img src="https://images.unsplash.com/photo-1578351184300-3d84a7178822?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" class="w-full h-32 object-cover rounded-lg mb-4" alt="Producción de video completa con efectos visuales."><div class="flex-grow"><h4 class="text-xl font-bold mb-2">Oro: Producción Completa</h4><p>Video de marketing (2-5 min) con efectos avanzados y corrección de color.</p><p class="mt-4 font-semibold">Precio: $220 - $450</p></div><div class="mt-auto pt-4"><button class="block w-full bg-[#FFD700] text-black px-6 py-3 rounded-full font-semibold hover:bg-[#e6c200] transition neon-oro" onclick="openPopup('video-oro')" aria-label="Explorar Paquete Oro">Explorar Oro</button></div></div></div>
-                </div>
-            </div>
-        </div>
-      </div>
-    </section>
+.neon-blue {
+  box-shadow: 0 0 10px rgba(79, 70, 229, 0.8), 0 0 20px rgba(79, 70, 229, 0.6);
+}
 
-    <section id="portfolio" class="py-20 bg-slate-100">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12 text-gray-900">Portafolio</h2>
-        <nav class="portfolio-nav flex justify-center flex-wrap gap-4 mb-12 text-lg" aria-label="Selección de Portafolio">
-          <a href="#portfolio-web" class="active py-2 px-4" onclick="showPortfolio('portfolio-web', event)">Web</a>
-          <a href="#portfolio-uiux" class="py-2 px-4" onclick="showPortfolio('portfolio-uiux', event)">UI/UX</a>
-          <a href="#portfolio-graphic" class="py-2 px-4" onclick="showPortfolio('portfolio-graphic', event)">Gráficos</a>
-        </nav>
-        
-        <div class="portfolio-container relative">
-            <div id="portfolio-web" class="portfolio-section">
-                <div class="portfolio-page" id="portfolio-web-page-1">
-                     <div class="card p-6"><div class="card-content"><!-- Foto #28 --><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80" alt="Captura de pantalla de un sitio web corporativo moderno." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Sitio Corporativo</h3><p class="text-gray-600">WordPress con SEO avanzado.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-web-1')">Ver Detalles</button></div></div></div>
-                     <div class="card p-6"><div class="card-content"><!-- Foto #29 --><img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Interfaz de una tienda online de ropa." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">E-Commerce</h3><p class="text-gray-600">Tienda Shopify personalizada.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-web-2')">Ver Detalles</button></div></div></div>
-                     <div class="card p-6"><div class="card-content"><!-- Foto #30 --><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Dashboard de una aplicación de gestión de proyectos." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">App React</h3><p class="text-gray-600">Aplicación full-stack.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-web-3')">Ver Detalles</button></div></div></div>
-                </div>
-                 <div class="portfolio-page hidden" id="portfolio-web-page-2">
-                     <div class="card p-6"><div class="card-content"><!-- Foto #31 --><img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="Página principal de un blog de tecnología." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Blog de Tecnología</h3><p class="text-gray-600">Sitio de noticias con CMS.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-web-1')">Ver Detalles</button></div></div></div>
-                     <div class="card p-6"><div class="card-content"><!-- Foto #32 --><img src="https://images.unsplash.com/photo-1596496050827-ba273b5a452a?ixlib=rb-4.0.3&auto=format&fit=crop&w=764&q=80" alt="Landing page para una aplicación móvil." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Landing Page</h3><p class="text-gray-600">Página de captura optimizada.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-web-2')">Ver Detalles</button></div></div></div>
-                     <div class="card p-6"><div class="card-content"><!-- Foto #33 --><img src="https://images.unsplash.com/photo-1502945015378-0e284ca1a5be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Portafolio personal de un fotógrafo." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Portafolio Artístico</h3><p class="text-gray-600">Sitio web visual con animaciones.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-web-3')">Ver Detalles</button></div></div></div>
-                </div>
-                <div class="carousel-nav flex justify-center gap-4 mt-6">
-                   <button id="portfolio-web-prev-btn" onclick="scrollPortfolio('web', -1)" aria-label="Anterior">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-                  </button>
-                  <button id="portfolio-web-next-btn" onclick="scrollPortfolio('web', 1)" aria-label="Siguiente">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                  </button>
-                </div>
-            </div>
-            
-            <div id="portfolio-uiux" class="portfolio-section hidden">
-               <div class="portfolio-container">
-                <div class="portfolio-page" id="portfolio-uiux-page-1">
-                  <div class="card p-6"><div class="card-content"><!-- Foto #34 --><img src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80" alt="Prototipo de alta fidelidad de una aplicación de fitness." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Prototipo App</h3><p class="text-gray-600">Prototipo Figma para fitness.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-uiux-1')">Ver Detalles</button></div></div></div>
-                  <div class="card p-6"><div class="card-content"><!-- Foto #35 --><img src="https://images.unsplash.com/photo-1522125670776-3c7abb882bc2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Componentes de un sistema de diseño como botones y tarjetas." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Sistema de Diseño</h3><p class="text-gray-600">Guía UI/UX completa.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-uiux-2')">Ver Detalles</button></div></div></div>
-                  <div class="card p-6"><div class="card-content"><!-- Foto #36 --><img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80" alt="Bocetos y wireframes de baja fidelidad de una página web." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Wireframes</h3><p class="text-gray-600">Wireframes para e-commerce.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-uiux-3')">Ver Detalles</button></div></div></div>
-                </div>
-                 <div class="portfolio-page hidden" id="portfolio-uiux-page-2">
-                  <div class="card p-6"><div class="card-content"><!-- Foto #37 --><img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=880&q=80" alt="Diseño de interfaz de una aplicación de viajes." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">App de Viajes</h3><p class="text-gray-600">Diseño de interfaz móvil.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-uiux-1')">Ver Detalles</button></div></div></div>
-                  <div class="card p-6"><div class="card-content"><!-- Foto #38 --><img src="https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Dashboard con gráficos y datos para una aplicación de análisis." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Dashboard Analítico</h3><p class="text-gray-600">UI para visualización de datos.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-uiux-2')">Ver Detalles</button></div></div></div>
-                  <div class="card p-6"><div class="card-content"><!-- Foto #39 --><img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Diagrama de flujo de la experiencia de un usuario en una app." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">User Flow</h3><p class="text-gray-600">Investigación de experiencia.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-uiux-3')">Ver Detalles</button></div></div></div>
-                </div>
-               </div>
-               <div class="carousel-nav flex justify-center gap-4 mt-6">
-                   <button id="portfolio-uiux-prev-btn" onclick="scrollPortfolio('uiux', -1)" aria-label="Anterior">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-                  </button>
-                  <button id="portfolio-uiux-next-btn" onclick="scrollPortfolio('uiux', 1)" aria-label="Siguiente">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                  </button>
-                </div>
-            </div>
-            <div id="portfolio-graphic" class="portfolio-section hidden">
-              <div class="portfolio-container">
-                <div class="portfolio-page" id="portfolio-graphic-page-1">
-                  <div class="card p-6"><div class="card-content"><!-- Foto #40 --><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Logotipo y menú diseñados para un restaurante." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Branding Restaurante</h3><p class="text-gray-600">Logotipo y gráficos.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-graphic-1')">Ver Detalles</button></div></div></div>
-                  <div class="card p-6"><div class="card-content"><!-- Foto #41 --><img src="https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Escena de una animación 2D publicitaria." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Animación</h3><p class="text-gray-600">Video animado 30s.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-graphic-2')">Ver Detalles</button></div></div></div>
-                  <div class="card p-6"><div class="card-content"><!-- Foto #42 --><img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="Conjunto de plantillas para posts de Instagram." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Gráficos Sociales</h3><p class="text-gray-600">Posters para Instagram.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-graphic-3')">Ver Detalles</button></div></div></div>
-                </div>
-                 <div class="portfolio-page hidden" id="portfolio-graphic-page-2">
-                  <div class="card p-6"><div class="card-content"><!-- Foto #43 --><img src="https://images.unsplash.com/photo-1590602843213-9594397a708a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Portada diseñada para un podcast." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Arte para Podcast</h3><p class="text-gray-600">Diseño de portada.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-graphic-1')">Ver Detalles</button></div></div></div>
-                  <div class="card p-6"><div class="card-content"><!-- Foto #44 --><img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Infografía sobre el cambio climático." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Infografía</h3><p class="text-gray-600">Visualización de datos.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-graphic-2')">Ver Detalles</button></div></div></div>
-                  <div class="card p-6"><div class="card-content"><!-- Foto #45 --><img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80" alt="Diseño de una camiseta para una marca." class="w-full h-48 object-cover rounded-lg mb-4"><div class="flex-grow"><h3 class="text-xl font-semibold mb-2 text-indigo-600">Merchandising</h3><p class="text-gray-600">Diseño para productos.</p></div><div class="mt-auto pt-4"><button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" onclick="openPopup('portfolio-graphic-3')">Ver Detalles</button></div></div></div>
-                </div>
-               </div>
-               <div class="carousel-nav flex justify-center gap-4 mt-6">
-                   <button id="portfolio-graphic-prev-btn" onclick="scrollPortfolio('graphic', -1)" aria-label="Anterior">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-                  </button>
-                  <button id="portfolio-graphic-next-btn" onclick="scrollPortfolio('graphic', 1)" aria-label="Siguiente">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                  </button>
-                </div>
-            </div>
-        </div>
-      </div>
-    </section>
+/* Card Styles */
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
 
-    <section id="blog" class="py-20 bg-slate-50">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12 text-gray-900">Desde el Blog</h2>
-        <div class="blog-container">
-            <!-- Blog Pages will be dynamically filled by JavaScript -->
-        </div>
-        <div class="carousel-nav flex justify-center gap-4 mt-6">
-           <button id="blog-prev-btn" aria-label="Anterior">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-          </button>
-          <button id="blog-next-btn" aria-label="Siguiente">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-          </button>
-        </div>
-      </div>
-    </section>
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
 
-    <section id="contact" class="py-20 text-white relative">
-      <canvas id="contact-particles" class="absolute inset-0 z-0"></canvas>
-      <div class="container mx-auto px-4 relative z-10">
-        <h2 class="text-4xl font-bold text-center mb-16">¡Convierte Tu Visión en Realidad!</h2>
-        <form class="max-w-lg mx-auto bg-gray-50 p-8 rounded-2xl shadow-lg">
-          <div class="mb-6">
-            <label for="name" class="block text-gray-700 font-semibold mb-2">Nombre</label>
-            <input type="text" id="name" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-600 transition" required>
-          </div>
-          <div class="mb-6">
-            <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
-            <input type="email" id="email" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-600 transition" required>
-          </div>
-          <div class="mb-6">
-            <label for="message" class="block text-gray-700 font-semibold mb-2">Mensaje</label>
-            <textarea id="message" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-600 transition" rows="5" required></textarea>
-          </div>
-          <button type="submit" class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-500 transition neon-blue" aria-label="Enviar Mensaje">Enviar Mensaje</button>
-        </form>
-      </div>
-    </section>
-  </main>
-  
-  <footer class="text-white py-12">
-    <div class="container mx-auto px-4 text-center">
-      <div class="flex flex-col items-center mb-4">
-        <a href="#home" aria-label="Volver al inicio">
-            <!-- Foto #46 -->
-            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=48&h=48&q=80" alt="Logo de HAZE-SAMA" class="w-12 h-12 mb-2 rounded-full">
-        </a>
-        <h3 class="text-xl font-bold">HAZE-SAMA</h3>
-      </div>
-      <p class="mb-6 text-base">Freelancer Web y Digital | Soluciones futuristas.</p>
-      <div class="flex justify-center space-x-4 mb-6 text-base">
-        <a href="#" class="hover:text-purple-400 transition">Facebook</a>
-        <a href="#" class="hover:text-purple-400 transition">Instagram</a>
-        <a href="#" class="hover:text-purple-400 transition">LinkedIn</a>
-        <a href="#" class="hover:text-purple-400 transition">Twitter</a>
-      </div>
-      <p class="text-sm text-gray-400">© 2025 HAZE-SAMA. Todos los derechos reservados.</p>
-    </div>
-  </footer>
+.card img {
+  transition: transform 0.3s ease;
+}
 
-  <!-- Popups will be added dynamically by JS -->
-  <div id="popup-container"></div>
+.card:hover img {
+  transform: scale(1.05);
+}
 
-  <div id="success-message" class="popup-overlay"><div class="popup-content text-center"><h3 class="text-2xl font-bold mb-4 text-green-500">¡Mensaje Enviado!</h3><p>Gracias por contactarme. Te responderé lo antes posible.</p><button class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-500 transition" onclick="this.closest('.popup-overlay').style.display='none'">Cerrar</button></div></div>
-  
-  <script src="script.js" defer></script>
-</body>
-</html>
+.card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
+}
+
+
+/* Services Section */
+#services {
+  background: linear-gradient(135deg, #1e3a8a, #7e22ce);
+  position: relative;
+  overflow: hidden;
+}
+
+#services-particles {
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+}
+
+.service-nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.service-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 8px 16px;
+  transition: color 0.3s ease;
+  border-radius: 9999px;
+}
+
+.service-nav a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.service-section-container {
+    position: relative;
+    min-height: 600px; 
+}
+
+.service-section {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.service-section.hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.neon-bronce {
+  box-shadow: 0 0 10px rgba(205, 127, 50, 0.8), 0 0 20px rgba(205, 127, 50, 0.6);
+}
+
+.neon-plata {
+  box-shadow: 0 0 10px rgba(192, 192, 192, 0.8), 0 0 20px rgba(192, 192, 192, 0.6);
+}
+
+.neon-oro {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Portfolio Section */
+.portfolio-nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.portfolio-nav a {
+  color: #1e293b;
+  text-decoration: none;
+  padding: 8px 16px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  border-radius: 9999px;
+}
+
+.portfolio-nav a.active {
+  color: #ffffff;
+  background-color: #4f46e5;
+  font-weight: 700;
+}
+
+.portfolio-container {
+    position: relative;
+    min-height: 520px; /* Adjust based on card height */
+}
+.portfolio-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.portfolio-page.hidden {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.carousel-nav button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-nav button:hover {
+  background: #4338ca;
+}
+
+.carousel-nav button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Blog Section */
+#blog .blog-container {
+    position: relative;
+    min-height: 520px;
+}
+#blog .blog-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#blog .blog-page.hidden {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+/* Contact Section */
+#contact {
+  background: linear-gradient(135deg, #1e3a8a, #7e22ce);
+  position: relative;
+  overflow: hidden;
+}
+
+#contact-particles {
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+}
+
+form input, form textarea {
+  background: #ffffff;
+  color: #1e293b;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus, form textarea:focus {
+  box-shadow: 0 0 8px rgba(79, 70, 229, 0.5);
+}
+
+form input:invalid:focus, form textarea:invalid:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+/* Footer Styles */
+footer {
+  background: linear-gradient(135deg, #1e3a8a, #7e22ce);
+}
+
+footer a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Popup Styles */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.popup-content {
+  background: #ffffff;
+  color: #1e293b;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.popup-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.popup-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.popup-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.popup-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.popup-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Animations */
+.animate-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
