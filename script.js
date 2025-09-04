@@ -88,9 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
           e.preventDefault();
-          document.querySelector(this.getAttribute('href')).scrollIntoView({
-              behavior: 'smooth'
-          });
+          const targetElement = document.querySelector(this.getAttribute('href'));
+          if (targetElement) {
+              targetElement.scrollIntoView({
+                  behavior: 'smooth'
+              });
+          }
           if(menuToggle && menuToggle.checked) {
               menuToggle.checked = false;
           }
@@ -99,8 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Close menu when clicking outside
   document.addEventListener('click', function(event) {
+    if (!menu || !menuToggle) return;
     const isClickInsideMenu = menu.contains(event.target);
-    const isClickOnToggle = menuToggle.contains(event.target) || document.querySelector(`label[for=${menuToggle.id}]`).contains(event.target);
+    const isClickOnToggle = document.querySelector(`label[for=${menuToggle.id}]`).contains(event.target);
 
     if (!isClickInsideMenu && !isClickOnToggle && menuToggle.checked) {
       menuToggle.checked = false;
@@ -147,18 +151,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- Tab Navigation Logic ---
 function showSection(sectionPrefix, sectionId, event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     
     const navLinks = document.querySelectorAll(`.${sectionPrefix}-nav a`);
     navLinks.forEach(link => link.classList.remove('active'));
-    event.currentTarget.classList.add('active');
+    
+    const activeLink = document.querySelector(`.${sectionPrefix}-nav a[href="#${sectionId}"]`);
+    if(activeLink) activeLink.classList.add('active');
 
     const sections = document.querySelectorAll(`.${sectionPrefix}-section`);
     sections.forEach(section => {
         if (section.id === sectionId) {
             section.classList.remove('hidden');
-            section.style.position = 'relative'; // Ensure it's not absolutely positioned
-            gsap.fromTo(section, { opacity: 0 }, { opacity: 1, duration: 0.4 });
         } else {
             section.classList.add('hidden');
         }
@@ -171,11 +175,10 @@ function showService(serviceId, event) {
 
 function showPortfolio(portfolioId, event) {
     showSection('portfolio', portfolioId, event);
-    // Reset page to 1 when switching tabs
+    const category = portfolioId.replace('portfolio-', '');
     const state = pageStates[portfolioId];
     if (state && state.currentPage !== 1) {
-        // This calculates the direction to get back to page 1
-        handlePageChange(portfolioId, 1 - state.currentPage);
+        handlePageChange(portfolioId, 1 - state.currentPage, false);
     }
 }
 
@@ -189,12 +192,13 @@ const pageStates = {
 };
 
 function scrollPortfolio(category, direction) {
-    handlePageChange(`portfolio-${category}`, direction);
+    handlePageChange(`portfolio-${category}`, direction, true);
 }
 
-function handlePageChange(section, direction) {
+function handlePageChange(section, direction, animate = true) {
     const state = pageStates[section];
     if (!state) return;
+    
     const newPage = state.currentPage + direction;
 
     if (newPage < 1 || newPage > state.totalPages) {
@@ -205,16 +209,21 @@ function handlePageChange(section, direction) {
     const newPageEl = document.getElementById(`${section}-page-${newPage}`);
 
     if (!oldPageEl || !newPageEl) return;
-
-    gsap.to(oldPageEl, { 
-        opacity: 0, 
-        duration: 0.2, 
-        onComplete: () => {
-            oldPageEl.classList.add('hidden');
-            newPageEl.classList.remove('hidden');
-            gsap.fromTo(newPageEl, { opacity: 0 }, { opacity: 1, duration: 0.2 });
-        }
-    });
+    
+    if (animate) {
+        gsap.to(oldPageEl, { 
+            opacity: 0, 
+            duration: 0.2, 
+            onComplete: () => {
+                oldPageEl.classList.add('hidden');
+                newPageEl.classList.remove('hidden');
+                gsap.fromTo(newPageEl, { opacity: 0 }, { opacity: 1, duration: 0.2 });
+            }
+        });
+    } else {
+        oldPageEl.classList.add('hidden');
+        newPageEl.classList.remove('hidden');
+    }
 
     state.currentPage = newPage;
     
@@ -282,8 +291,8 @@ function setupBlog() {
     }
     container.innerHTML = allCardsHTML;
     
-    document.getElementById('blog-prev-btn').addEventListener('click', () => handlePageChange('blog', -1));
-    document.getElementById('blog-next-btn').addEventListener('click', () => handlePageChange('blog', 1));
+    document.getElementById('blog-prev-btn').addEventListener('click', () => handlePageChange('blog', -1, true));
+    document.getElementById('blog-next-btn').addEventListener('click', () => handlePageChange('blog', 1, true));
 }
 
 // --- Dynamic Popup Setup ---
@@ -313,12 +322,22 @@ function setupPopups() {
         { id: 'content-bronce', title: 'Artículos SEO (Bronce)', content: 'Artículos optimizados de 500-700 palabras con 1-2 imágenes. Ideal para blogs nuevos o redes sociales.<br><br><strong>Entrega:</strong> Documento Word, imágenes editadas, publicación opcional.<br><strong>Precio:</strong> $10 - $15.', img: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80'},
         { id: 'content-plata', title: 'Contenido Multimedia (Plata)', content: 'Artículos de 1,000-1,500 palabras con infografías o gráficos personalizados. Perfecto para redes y blogs establecidos.<br><br><strong>Entrega:</strong> Documento Word, gráficos PNG/SVG, publicación opcional.<br><strong>Precio:</strong> $30 - $55.', img: 'https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=600&q=80'},
         { id: 'content-oro', title: 'Contenido Premium (Oro)', content: 'E-books de 10-20 páginas o videos editados (3-5 min) con SEO avanzado. Ideal para campañas de alto impacto.<br><br><strong>Entrega:</strong> PDF o MP4, archivos fuente, publicación opcional.<br><strong>Precio:</strong> $150 - $250.', img: 'https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?auto=format&fit=crop&w=600&q=80'},
-        { id: 'graphic-bronce', title: 'Gráficos para Redes (Bronce)', content: '5-7 gráficos optimizados para redes sociales (Instagram, Twitter). Ideal para campañas rápidas.<br><br><strong>Entrega:</strong> Archivos PNG/JPG, editable en Canva.<br><strong>Precio:</strong> $10 - $20.', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=60'},
-        { id: 'graphic-plata', title: 'Branding Básico (Plata)', content: 'Logotipo, paleta de colores y plantillas para redes o presentaciones. Perfecto para startups en crecimiento.<br><br><strong>Entrega:</strong> Archivos AI/PNG, guía de marca PDF.<br><strong>Precio:</strong> $50 - $90.', img: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=600&q=60'},
+        { id: 'graphic-bronce', title: 'Gráficos para Redes (Bronce)', content: '5-7 gráficos optimizados para redes sociales (Instagram, Twitter). Ideal para campañas rápidas.<br><br><strong>Entrega:</strong> Archivos PNG/JPG, editable en Canva.<br><strong>Precio:</strong> $10 - $20.', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=80'},
+        { id: 'graphic-plata', title: 'Branding Básico (Plata)', content: 'Logotipo, paleta de colores y plantillas para redes o presentaciones. Perfecto para startups en crecimiento.<br><br><strong>Entrega:</strong> Archivos AI/PNG, guía de marca PDF.<br><strong>Precio:</strong> $50 - $90.', img: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=600&q=80'},
         { id: 'graphic-oro', title: 'Ilustraciones y Animaciones (Oro)', content: 'Ilustraciones personalizadas o animaciones (30-60s) para campañas premium. Ideal para marcas establecidas.<br><br><strong>Entrega:</strong> Archivos AI/MP4, editable en After Effects, guía de uso.<br><strong>Precio:</strong> $330 - $759.', img: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?auto=format&fit=crop&w=600&q=80'},
         { id: 'video-bronce', title: 'Clips Sociales (Bronce)', content: 'Edición de 3-5 videos cortos (hasta 60s) para redes sociales.<br><br><strong>Entrega:</strong> Archivos MP4 optimizados para cada red.<br><strong>Precio:</strong> $12 - $25.', img: 'https://images.unsplash.com/photo-1574627051240-573577d48377?auto=format&fit=crop&w=600&q=60'},
         { id: 'video-plata', title: 'Video Promocional (Plata)', content: 'Video promocional de 1-2 minutos con música y gráficos básicos.<br><br><strong>Entrega:</strong> Archivo MP4 en alta resolución.<br><strong>Precio:</strong> $60 - $120.', img: 'https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?auto=format&fit=crop&w=600&q=60'},
         { id: 'video-oro', title: 'Producción Completa (Oro)', content: 'Video de marketing (2-5 min) con efectos avanzados y corrección de color.<br><br><strong>Entrega:</strong> Archivo MP4 en 4K, archivos del proyecto.<br><strong>Precio:</strong> $220 - $450.', img: 'https://images.unsplash.com/photo-1578351184300-3d84a7178822?auto=format&fit=crop&w=600&q=80'},
+        // Portfolio Popups
+        { id: 'portfolio-web-1', title: 'Sitio Corporativo', content: 'Sitio WordPress para una empresa de consultoría, con SEO avanzado y diseño responsivo.<br><br><strong>Tecnologías:</strong> WordPress, Elementor, Yoast SEO.' },
+        { id: 'portfolio-web-2', title: 'E-Commerce', content: 'Tienda Shopify personalizada con integración de pagos y optimización SEO.<br><br><strong>Tecnologías:</strong> Shopify, Oberlo, Google Analytics.' },
+        { id: 'portfolio-web-3', title: 'App React', content: 'Aplicación full-stack con React, Node.js y MongoDB para gestión de proyectos.<br><br><strong>Tecnologías:</strong> React, Node.js, MongoDB, JWT.' },
+        { id: 'portfolio-uiux-1', title: 'Prototipo App', content: 'Prototipo clickable en Figma para una app de fitness con transiciones suaves.<br><br><strong>Herramientas:</strong> Figma, Adobe XD.' },
+        { id: 'portfolio-uiux-2', title: 'Sistema de Diseño', content: 'Guía UI/UX completa con componentes reutilizables para una startup tech.<br><br><strong>Herramientas:</strong> Figma, Sketch.' },
+        { id: 'portfolio-uiux-3', title: 'Wireframes', content: 'Wireframes para un e-commerce con enfoque en usabilidad móvil.<br><br><strong>Herramientas:</strong> Figma, Balsamiq.' },
+        { id: 'portfolio-graphic-1', title: 'Branding Restaurante', content: 'Logotipo y gráficos para un restaurante moderno con estética minimalista.<br><br><strong>Herramientas:</strong> Illustrator, Photoshop.' },
+        { id: 'portfolio-graphic-2', title: 'Animación', content: 'Video animado de 30 segundos para una campaña publicitaria.<br><br><strong>Herramientas:</strong> After Effects, Premiere Pro.' },
+        { id: 'portfolio-graphic-3', title: 'Gráficos Sociales', content: 'Posters optimizados para Instagram y Twitter para una marca de moda.<br><br><strong>Herramientas:</strong> Canva, Photoshop.' },
     ];
 
     let popupHTML = '';
@@ -376,3 +395,4 @@ function openPopup(popupId) {
       }
   });
 }
+
