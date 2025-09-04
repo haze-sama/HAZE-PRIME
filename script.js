@@ -81,20 +81,32 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticles('services-particles');
   initParticles('contact-particles');
   
-  // --- Smooth Scroll Navigation ---
+  // --- Smooth Scroll & Menu Logic ---
+  const menuToggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu');
+
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
           e.preventDefault();
           document.querySelector(this.getAttribute('href')).scrollIntoView({
               behavior: 'smooth'
           });
-          // For mobile menu, close it after click
-          const menuToggle = document.getElementById('menu-toggle');
           if(menuToggle && menuToggle.checked) {
               menuToggle.checked = false;
           }
       });
   });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', function(event) {
+    const isClickInsideMenu = menu.contains(event.target);
+    const isClickOnToggle = menuToggle.contains(event.target) || document.querySelector(`label[for=${menuToggle.id}]`).contains(event.target);
+
+    if (!isClickInsideMenu && !isClickOnToggle && menuToggle.checked) {
+      menuToggle.checked = false;
+    }
+  });
+
 
   // --- GSAP Scroll Animations ---
   gsap.from('#home h1', { y: 50, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '#home', start: 'top 80%' } });
@@ -145,11 +157,10 @@ function showSection(sectionPrefix, sectionId, event) {
     sections.forEach(section => {
         if (section.id === sectionId) {
             section.classList.remove('hidden');
-            section.style.position = 'relative';
+            section.style.position = 'relative'; // Ensure it's not absolutely positioned
             gsap.fromTo(section, { opacity: 0 }, { opacity: 1, duration: 0.4 });
         } else {
             section.classList.add('hidden');
-            section.style.position = 'absolute';
         }
     });
 }
@@ -161,12 +172,13 @@ function showService(serviceId, event) {
 function showPortfolio(portfolioId, event) {
     showSection('portfolio', portfolioId, event);
     // Reset page to 1 when switching tabs
-    const category = portfolioId.replace('portfolio-', '');
-    const state = pageStates[`portfolio-${category}`];
+    const state = pageStates[portfolioId];
     if (state && state.currentPage !== 1) {
-        handlePageChange(`portfolio-${category}`, 1 - state.currentPage);
+        // This calculates the direction to get back to page 1
+        handlePageChange(portfolioId, 1 - state.currentPage);
     }
 }
+
 
 // --- Pagination Logic ---
 const pageStates = {
@@ -215,13 +227,13 @@ const blogData = [
     { id: 1, title: "5 Trucos para un Sitio Web Rápido", desc: "Optimiza con Lighthouse.", img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
     { id: 2, title: "Guía Básica de SEO", desc: "Estrategias para Google.", img: "https://images.unsplash.com/photo-1562577309-2592ab84b1bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
     { id: 3, title: "Errores UI a Evitar", desc: "Consejos para interfaces.", img: "https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
-    { id: 4, title: "Tendencias de Diseño Web", desc: "Lo nuevo para el próximo año.", img: "https://images.unsplash.com/photo-1559028010-6b4614b3a6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
-    { id: 5, title: "Optimización Mobile", desc: "Mejora la experiencia móvil.", img: "https://images.unsplash.com/photo-1588420343618-6141de3b3633?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
+    { id: 4, title: "Tendencias de Diseño Web", desc: "Lo nuevo para el próximo año.", img: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
+    { id: 5, title: "Optimización Mobile", desc: "Mejora la experiencia móvil.", img: "https://images.unsplash.com/photo-1605152276897-4f61878926c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
     { id: 6, title: "Estrategias Redes Sociales", desc: "Conecta con tu audiencia.", img: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
     { id: 7, title: "Claves para un Branding Exitoso", desc: "Construye una marca memorable.", img: "https://images.unsplash.com/photo-1543269664-76bc3997d9ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
-    { id: 8, title: "IA en el Desarrollo Web", desc: "Cómo la IA está cambiando el juego.", img: "https://images.unsplash.com/photo-1620712943543-bcc462232482?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
-    { id: 9, title: "Ciberseguridad para Principiantes", desc: "Protege tu sitio web de ataques.", img: "https://images.unsplash.com/photo-1526374965328-5f61d25c04b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
-    { id: 10, title: "Tips para tu E-Commerce", desc: "Aumenta tus ventas online.", img: "https://images.unsplash.com/photo-1522204554281-7c95b40d7c04?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
+    { id: 8, title: "IA en el Desarrollo Web", desc: "Cómo la IA está cambiando el juego.", img: "https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
+    { id: 9, title: "Ciberseguridad para Principiantes", desc: "Protege tu sitio web de ataques.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
+    { id: 10, title: "Tips para tu E-Commerce", desc: "Aumenta tus ventas online.", img: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
     { id: 11, title: "El Mundo del Freelance", desc: "Consejos para empezar con éxito.", img: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
     { id: 12, title: "Accesibilidad Web Importa", desc: "Crea una web inclusiva para todos.", img: "https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
     { id: 13, title: "Métricas Clave en Marketing", desc: "Mide lo que realmente importa.", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" },
@@ -240,7 +252,7 @@ const blogData = [
 
 function setupBlog() {
     const container = document.querySelector('#blog .blog-container');
-    const cardsPerPage = 4; // Updated to 4 cards per page
+    const cardsPerPage = 4;
     const numPages = Math.ceil(blogData.length / cardsPerPage);
     pageStates.blog.totalPages = numPages;
 
@@ -289,24 +301,24 @@ function setupPopups() {
         { id: 'skill-strategy', title: 'Estrategia Digital Integral', content: 'El éxito online no es casualidad, es el resultado de una estrategia bien definida. Analizo tu negocio, tu mercado y tu competencia para desarrollar un plan de marketing digital cohesivo que integre todas las piezas del rompecabezas: SEO, contenido, redes sociales, y más. Defino KPIs claros, establezco un roadmap de acciones y mido constantemente los resultados para optimizar el rendimiento. Mi visión estratégica asegura que cada esfuerzo invertido esté alineado con tus objetivos comerciales y contribuya a un crecimiento sostenible a largo plazo.', img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80' },
         
         // Service Plan Popups
-        { id: 'web-bronce', title: 'Sitio Web Estático Básico (Bronce)', content: 'Lanza tu presencia online con un sitio estático de 3-5 páginas, diseño responsivo, animaciones CSS y SEO inicial. Perfecto para startups.<br><br><strong>Entrega:</strong> Código en GitHub, despliegue en Netlify, video tutorial.<br><strong>Precio:</strong> $80 - $150.' },
-        { id: 'web-plata', title: 'Sitio Web Dinámico con CMS (Plata)', content: 'Impulsa tu marca con un sitio WordPress de 5-10 páginas, tema personalizado, SEO avanzado y animaciones GSAP. Ideal para blogs y negocios.<br><br><strong>Entrega:</strong> Acceso CMS, archivos en Google Drive, documentación PDF.<br><strong>Precio:</strong> $300 - $480.' },
-        { id: 'web-oro', title: 'Aplicación Web Full-Stack (Oro)', content: 'Domina el mercado con una app React y Node.js, base de datos, autenticación JWT y soporte 30 días. Para proyectos ambiciosos.<br><br><strong>Entrega:</strong> Código en GitHub, despliegue en AWS, documentación API.<br><strong>Precio:</strong> $900 - $1,500.' },
-        { id: 'uiux-bronce', title: 'Wireframes UI/UX (Bronce)', content: 'Wireframes estáticos para 3-5 pantallas en Figma. Ideal para startups que planean su app.<br><br><strong>Entrega:</strong> Archivos Figma, exportaciones PNG/PDF.<br><strong>Precio:</strong> $40 - $80.' },
-        { id: 'uiux-plata', title: 'Prototipo UI/UX (Plata)', content: 'Prototipo clickable de 5-10 pantallas con transiciones suaves. Perfecto para pruebas de usuario y validación.<br><br><strong>Entrega:</strong> Enlace Figma, exportaciones PNG/SVG, video explicativo.<br><strong>Precio:</strong> $150 - $250.' },
-        { id: 'uiux-oro', title: 'Sistema de Diseño UI/UX (Oro)', content: 'Guía completa con componentes reutilizables, paleta de colores y pruebas de usuario. Ideal para proyectos escalables.<br><br><strong>Entrega:</strong> Archivos Figma, documentación PDF, soporte 15 días.<br><strong>Precio:</strong> $400 - $800.' },
-        { id: 'seo-bronce', title: 'Auditoría SEO (Bronce)', content: 'Análisis on-page detallado con recomendaciones accionables. Ideal para sitios nuevos o pequeños.<br><br><strong>Entrega:</strong> Informe PDF, lista de keywords, plan de acción.<br><strong>Precio:</strong> $50 - $75.' },
-        { id: 'seo-plata', title: 'Optimización SEO (Plata)', content: 'Optimización de 5 páginas con 10-20 keywords, incluyendo metaetiquetas y enlaces internos. Perfecto para negocios en crecimiento.<br><br><strong>Entrega:</strong> Informe PDF, optimización implementada, reporte inicial.<br><strong>Precio:</strong> $150 - $250.' },
-        { id: 'seo-oro', title: 'Estrategia SEO Completa (Oro)', content: 'Estrategia avanzada con 20+ backlinks de calidad, auditoría completa y reportes mensuales. Para dominar tu nicho en Google.<br><br><strong>Entrega:</strong> Plan SEO, backlinks, reportes mensuales, soporte 30 días.<br><strong>Precio:</strong> $480 - $900.' },
-        { id: 'content-bronce', title: 'Artículos SEO (Bronce)', content: 'Artículos optimizados de 500-700 palabras con 1-2 imágenes. Ideal para blogs nuevos o redes sociales.<br><br><strong>Entrega:</strong> Documento Word, imágenes editadas, publicación opcional.<br><strong>Precio:</strong> $10 - $15.' },
-        { id: 'content-plata', title: 'Contenido Multimedia (Plata)', content: 'Artículos de 1,000-1,500 palabras con infografías o gráficos personalizados. Perfecto para redes y blogs establecidos.<br><br><strong>Entrega:</strong> Documento Word, gráficos PNG/SVG, publicación opcional.<br><strong>Precio:</strong> $30 - $55.' },
-        { id: 'content-oro', title: 'Contenido Premium (Oro)', content: 'E-books de 10-20 páginas o videos editados (3-5 min) con SEO avanzado. Ideal para campañas de alto impacto.<br><br><strong>Entrega:</strong> PDF o MP4, archivos fuente, publicación opcional.<br><strong>Precio:</strong> $150 - $250.' },
-        { id: 'graphic-bronce', title: 'Gráficos para Redes (Bronce)', content: '5-7 gráficos optimizados para redes sociales (Instagram, Twitter). Ideal para campañas rápidas.<br><br><strong>Entrega:</strong> Archivos PNG/JPG, editable en Canva.<br><strong>Precio:</strong> $10 - $20.' },
-        { id: 'graphic-plata', title: 'Branding Básico (Plata)', content: 'Logotipo, paleta de colores y plantillas para redes o presentaciones. Perfecto para startups en crecimiento.<br><br><strong>Entrega:</strong> Archivos AI/PNG, guía de marca PDF.<br><strong>Precio:</strong> $50 - $90.' },
-        { id: 'graphic-oro', title: 'Ilustraciones y Animaciones (Oro)', content: 'Ilustraciones personalizadas o animaciones (30-60s) para campañas premium. Ideal para marcas establecidas.<br><br><strong>Entrega:</strong> Archivos AI/MP4, editable en After Effects, guía de uso.<br><strong>Precio:</strong> $330 - $759.' },
-        { id: 'video-bronce', title: 'Clips Sociales (Bronce)', content: 'Edición de 3-5 videos cortos (hasta 60s) para redes sociales.<br><br><strong>Entrega:</strong> Archivos MP4 optimizados para cada red.<br><strong>Precio:</strong> $12 - $25.' },
-        { id: 'video-plata', title: 'Video Promocional (Plata)', content: 'Video promocional de 1-2 minutos con música y gráficos básicos.<br><br><strong>Entrega:</strong> Archivo MP4 en alta resolución.<br><strong>Precio:</strong> $60 - $120.' },
-        { id: 'video-oro', title: 'Producción Completa (Oro)', content: 'Video de marketing (2-5 min) con efectos avanzados y corrección de color.<br><br><strong>Entrega:</strong> Archivo MP4 en 4K, archivos del proyecto.<br><strong>Precio:</strong> $220 - $450.' },
+        { id: 'web-bronce', title: 'Sitio Web Estático Básico (Bronce)', content: 'Lanza tu presencia online con un sitio estático de 3-5 páginas, diseño responsivo, animaciones CSS y SEO inicial. Perfecto para startups.<br><br><strong>Entrega:</strong> Código en GitHub, despliegue en Netlify, video tutorial.<br><strong>Precio:</strong> $80 - $150.', img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80'},
+        { id: 'web-plata', title: 'Sitio Web Dinámico con CMS (Plata)', content: 'Impulsa tu marca con un sitio WordPress de 5-10 páginas, tema personalizado, SEO avanzado y animaciones GSAP. Ideal para blogs y negocios.<br><br><strong>Entrega:</strong> Acceso CMS, archivos en Google Drive, documentación PDF.<br><strong>Precio:</strong> $300 - $480.', img: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=600&q=80'},
+        { id: 'web-oro', title: 'Aplicación Web Full-Stack (Oro)', content: 'Domina el mercado con una app React y Node.js, base de datos, autenticación JWT y soporte 30 días. Para proyectos ambiciosos.<br><br><strong>Entrega:</strong> Código en GitHub, despliegue en AWS, documentación API.<br><strong>Precio:</strong> $900 - $1,500.', img: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=600&q=80'},
+        { id: 'uiux-bronce', title: 'Wireframes UI/UX (Bronce)', content: 'Wireframes estáticos para 3-5 pantallas en Figma. Ideal para startups que planean su app.<br><br><strong>Entrega:</strong> Archivos Figma, exportaciones PNG/PDF.<br><strong>Precio:</strong> $40 - $80.', img: 'https://images.unsplash.com/photo-1589122823055-6c9b56f8a45e?auto=format&fit=crop&w=600&q=80'},
+        { id: 'uiux-plata', title: 'Prototipo UI/UX (Plata)', content: 'Prototipo clickable de 5-10 pantallas con transiciones suaves. Perfecto para pruebas de usuario y validación.<br><br><strong>Entrega:</strong> Enlace Figma, exportaciones PNG/SVG, video explicativo.<br><strong>Precio:</strong> $150 - $250.', img: 'https://images.unsplash.com/photo-1558507652-2d9626c4e67a?auto=format&fit=crop&w=600&q=80'},
+        { id: 'uiux-oro', title: 'Sistema de Diseño UI/UX (Oro)', content: 'Guía completa con componentes reutilizables, paleta de colores y pruebas de usuario. Ideal para proyectos escalables.<br><br><strong>Entrega:</strong> Archivos Figma, documentación PDF, soporte 15 días.<br><strong>Precio:</strong> $400 - $800.', img: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?auto=format&fit=crop&w=600&q=80'},
+        { id: 'seo-bronce', title: 'Auditoría SEO (Bronce)', content: 'Análisis on-page detallado con recomendaciones accionables. Ideal para sitios nuevos o pequeños.<br><br><strong>Entrega:</strong> Informe PDF, lista de keywords, plan de acción.<br><strong>Precio:</strong> $50 - $75.', img: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=600&q=80'},
+        { id: 'seo-plata', title: 'Optimización SEO (Plata)', content: 'Optimización de 5 páginas con 10-20 keywords, incluyendo metaetiquetas y enlaces internos. Perfecto para negocios en crecimiento.<br><br><strong>Entrega:</strong> Informe PDF, optimización implementada, reporte inicial.<br><strong>Precio:</strong> $150 - $250.', img: 'https://images.unsplash.com/photo-1551288049-a94711e582A8?auto=format&fit=crop&w=600&q=80'},
+        { id: 'seo-oro', title: 'Estrategia SEO Completa (Oro)', content: 'Estrategia avanzada con 20+ backlinks de calidad, auditoría completa y reportes mensuales. Para dominar tu nicho en Google.<br><br><strong>Entrega:</strong> Plan SEO, backlinks, reportes mensuales, soporte 30 días.<br><strong>Precio:</strong> $480 - $900.', img: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80'},
+        { id: 'content-bronce', title: 'Artículos SEO (Bronce)', content: 'Artículos optimizados de 500-700 palabras con 1-2 imágenes. Ideal para blogs nuevos o redes sociales.<br><br><strong>Entrega:</strong> Documento Word, imágenes editadas, publicación opcional.<br><strong>Precio:</strong> $10 - $15.', img: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80'},
+        { id: 'content-plata', title: 'Contenido Multimedia (Plata)', content: 'Artículos de 1,000-1,500 palabras con infografías o gráficos personalizados. Perfecto para redes y blogs establecidos.<br><br><strong>Entrega:</strong> Documento Word, gráficos PNG/SVG, publicación opcional.<br><strong>Precio:</strong> $30 - $55.', img: 'https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=600&q=80'},
+        { id: 'content-oro', title: 'Contenido Premium (Oro)', content: 'E-books de 10-20 páginas o videos editados (3-5 min) con SEO avanzado. Ideal para campañas de alto impacto.<br><br><strong>Entrega:</strong> PDF o MP4, archivos fuente, publicación opcional.<br><strong>Precio:</strong> $150 - $250.', img: 'https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?auto=format&fit=crop&w=600&q=80'},
+        { id: 'graphic-bronce', title: 'Gráficos para Redes (Bronce)', content: '5-7 gráficos optimizados para redes sociales (Instagram, Twitter). Ideal para campañas rápidas.<br><br><strong>Entrega:</strong> Archivos PNG/JPG, editable en Canva.<br><strong>Precio:</strong> $10 - $20.', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=60'},
+        { id: 'graphic-plata', title: 'Branding Básico (Plata)', content: 'Logotipo, paleta de colores y plantillas para redes o presentaciones. Perfecto para startups en crecimiento.<br><br><strong>Entrega:</strong> Archivos AI/PNG, guía de marca PDF.<br><strong>Precio:</strong> $50 - $90.', img: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=600&q=60'},
+        { id: 'graphic-oro', title: 'Ilustraciones y Animaciones (Oro)', content: 'Ilustraciones personalizadas o animaciones (30-60s) para campañas premium. Ideal para marcas establecidas.<br><br><strong>Entrega:</strong> Archivos AI/MP4, editable en After Effects, guía de uso.<br><strong>Precio:</strong> $330 - $759.', img: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?auto=format&fit=crop&w=600&q=80'},
+        { id: 'video-bronce', title: 'Clips Sociales (Bronce)', content: 'Edición de 3-5 videos cortos (hasta 60s) para redes sociales.<br><br><strong>Entrega:</strong> Archivos MP4 optimizados para cada red.<br><strong>Precio:</strong> $12 - $25.', img: 'https://images.unsplash.com/photo-1574627051240-573577d48377?auto=format&fit=crop&w=600&q=60'},
+        { id: 'video-plata', title: 'Video Promocional (Plata)', content: 'Video promocional de 1-2 minutos con música y gráficos básicos.<br><br><strong>Entrega:</strong> Archivo MP4 en alta resolución.<br><strong>Precio:</strong> $60 - $120.', img: 'https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?auto=format&fit=crop&w=600&q=60'},
+        { id: 'video-oro', title: 'Producción Completa (Oro)', content: 'Video de marketing (2-5 min) con efectos avanzados y corrección de color.<br><br><strong>Entrega:</strong> Archivo MP4 en 4K, archivos del proyecto.<br><strong>Precio:</strong> $220 - $450.', img: 'https://images.unsplash.com/photo-1578351184300-3d84a7178822?auto=format&fit=crop&w=600&q=80'},
     ];
 
     let popupHTML = '';
@@ -357,7 +369,7 @@ function openPopup(popupId) {
     { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
   );
   
-  // Add event listener for the new popup
+  // Add event listener for the new popup to close on overlay click
   popup.addEventListener('click', function(e) {
       if (e.target === this) {
           this.style.display = 'none';
