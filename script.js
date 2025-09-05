@@ -17,34 +17,37 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
 
     const particles = [];
-    const particleCount = 50;
+    const particleCount = 150; // Increased particle count
 
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
-        this.color = 'rgba(255, 255, 255, 0.8)';
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        // Pulse effect properties
+        this.opacity = Math.random() * 0.5 + 0.2;
+        this.pulseDirection = 1;
+        this.pulseSpeed = Math.random() * 0.01;
       }
 
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.size > 0.2) this.size -= 0.01;
-        if (this.size <= 0.2) {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = Math.random() * 1 - 0.5;
-            this.speedY = Math.random() * 1 - 0.5;
-        }
+        // Pulse opacity
+        if (this.opacity >= 0.8) this.pulseDirection = -1;
+        if (this.opacity <= 0.1) this.pulseDirection = 1;
+        this.opacity += this.pulseDirection * this.pulseSpeed;
+
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
       }
 
       draw() {
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -126,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power3.out',
         scrollTrigger: {
             trigger: card,
-            start: 'top 85%',
+            start: 'top 90%', // Trigger animation sooner
             toggleActions: 'play none none none'
         }
     });
@@ -176,8 +179,10 @@ function showService(serviceId, event) {
 
 function showPortfolio(portfolioId, event) {
     showSection('portfolio', portfolioId, event);
+    // Reset page to 1 when switching tabs
     const state = pageStates[portfolioId];
     if (state && state.currentPage !== 1) {
+        // This calculates the direction to get back to page 1
         handlePageChange(portfolioId, 1 - state.currentPage, false);
     }
 }
@@ -327,11 +332,11 @@ function setupPopups() {
         { id: 'content-plata', title: 'Contenido Multimedia (Plata)', content: 'Artículos de 1,000-1,500 palabras con infografías o gráficos personalizados. Perfecto para redes y blogs establecidos.<br><br><strong>Entrega:</strong> Documento Word, gráficos PNG/SVG, publicación opcional.<br><strong>Precio:</strong> $30 - $55.', img: 'https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&w=600&q=80'},
         { id: 'content-oro', title: 'Contenido Premium (Oro)', content: 'E-books de 10-20 páginas o videos editados (3-5 min) con SEO avanzado. Ideal para campañas de alto impacto.<br><br><strong>Entrega:</strong> PDF o MP4, archivos fuente, publicación opcional.<br><strong>Precio:</strong> $150 - $250.', img: 'https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?auto=format&fit=crop&w=600&q=80'},
         { id: 'graphic-bronce', title: 'Gráficos para Redes (Bronce)', content: '5-7 gráficos optimizados para redes sociales (Instagram, Twitter). Ideal para campañas rápidas.<br><br><strong>Entrega:</strong> Archivos PNG/JPG, editable en Canva.<br><strong>Precio:</strong> $10 - $20.', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=60'},
-        { id: 'graphic-plata', title: 'Branding Básico (Plata)', content: 'Logotipo, paleta de colores y plantillas para redes o presentaciones. Perfecto para startups en crecimiento.<br><br><strong>Entrega:</strong> Archivos AI/PNG, guía de marca PDF.<br><strong>Precio:</strong> $50 - $90.', img: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=600&q=80'},
+        { id: 'graphic-plata', title: 'Branding Básico (Plata)', content: 'Logotipo, paleta de colores y plantillas para redes o presentaciones. Perfecto para startups en crecimiento.<br><br><strong>Entrega:</strong> Archivos AI/PNG, guía de marca PDF.<br><strong>Precio:</strong> $50 - $90.', img: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=600&q=60'},
         { id: 'graphic-oro', title: 'Ilustraciones y Animaciones (Oro)', content: 'Ilustraciones personalizadas o animaciones (30-60s) para campañas premium. Ideal para marcas establecidas.<br><br><strong>Entrega:</strong> Archivos AI/MP4, editable en After Effects, guía de uso.<br><strong>Precio:</strong> $330 - $759.', img: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?auto=format&fit=crop&w=600&q=80'},
         { id: 'video-bronce', title: 'Clips Sociales (Bronce)', content: 'Edición de 3-5 videos cortos (hasta 60s) para redes sociales.<br><br><strong>Entrega:</strong> Archivos MP4 optimizados para cada red.<br><strong>Precio:</strong> $12 - $25.', img: 'https://images.unsplash.com/photo-1574627051240-573577d48377?auto=format&fit=crop&w=600&q=60'},
-        { id: 'video-plata', title: 'Video Promocional (Plata)', content: 'Video promocional de 1-2 minutos con música y gráficos básicos.<br><br><strong>Entrega:</strong> Archivo MP4 en alta resolución.<br><strong>Precio:</strong> $60 - $120.', img: 'https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?auto=format&fit=crop&w=600&q=60'},
-        { id: 'video-oro', title: 'Producción Completa (Oro)', content: 'Video de marketing (2-5 min) con efectos avanzados y corrección de color.<br><br><strong>Entrega:</strong> Archivo MP4 en 4K, archivos del proyecto.<br><strong>Precio:</strong> $220 - $450.', img: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?auto=format&fit=crop&w=600&q=60'},
+        { id: 'video-plata', title: 'Video Promocional (Plata)', content: 'Video promocional de 1-2 minutos con música y gráficos básicos.<br><br><strong>Entrega:</strong> Archivo MP4 en alta resolución.<br><strong>Precio:</strong> $60 - $120.', img: 'https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?auto=format&fit=crop&w=600&q=80'},
+        { id: 'video-oro', title: 'Producción Completa (Oro)', content: 'Video de marketing (2-5 min) con efectos avanzados y corrección de color.<br><br><strong>Entrega:</strong> Archivo MP4 en 4K, archivos del proyecto.<br><strong>Precio:</strong> $220 - $450.', img: 'https://images.unsplash.com/photo-1611605698335-8b1569810432?auto=format&fit=crop&w=600&q=80'},
     ];
 
     let popupHTML = '';
@@ -365,7 +370,7 @@ function setupPopups() {
     });
 
 
-    popupContainer.innerHTML += popupHTML; // Append instead of replacing
+    popupContainer.innerHTML += popupHTML; // Append to the container, don't replace
 }
 
 
@@ -376,6 +381,7 @@ function openPopup(popupId) {
     console.error("Popup with ID " + popupId + " not found.");
     return;
   }
+  document.body.classList.add('popup-open'); // Lock background scroll
   popup.style.display = 'flex';
   gsap.fromTo(popup.querySelector('.popup-content'), 
     { scale: 0.8, opacity: 0 },
@@ -385,7 +391,26 @@ function openPopup(popupId) {
   // Add event listener for the new popup to close on overlay click
   popup.addEventListener('click', function(e) {
       if (e.target === this) {
-          this.style.display = 'none';
+          closePopup(popup);
       }
   });
+  
+  // Attach close event to the button inside
+  const closeButton = popup.querySelector('button');
+  if(closeButton) {
+    closeButton.onclick = () => closePopup(popup);
+  }
+}
+
+function closePopup(popupElement) {
+    document.body.classList.remove('popup-open'); // Unlock background scroll
+    gsap.to(popupElement.querySelector('.popup-content'), {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.in',
+        onComplete: () => {
+            popupElement.style.display = 'none';
+        }
+    });
 }
